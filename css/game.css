@@ -1,0 +1,53 @@
+.background {
+  background-image: url("http://lukedowding.com/wp-content/uploads/stars.jpg");
+  table-layout: fixed;
+  border-spacing: 0;
+}
+
+.background td {
+  padding: 0;
+}
+
+.lava {
+  background: #A239CA;
+}
+
+.wall {
+  background: #4717F6;
+}
+
+.floater {
+  background: #72d495;
+}
+
+.actor {
+  position: absolute;
+}
+
+.player {
+  background: rgb(64, 64, 64);
+}
+
+.coin {background: #f0d760;
+}
+
+.jewel:after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: -5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-color: #d4bdc5 transparent transparent transparent;
+  border-width: 15px 10px 0 10px;
+}
+
+.game {
+  position: relative;
+  max-height: 450px;
+  max-width: 600px;
+  overflow: hidden;
+}
+
+
