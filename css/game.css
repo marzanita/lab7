@@ -28,6 +28,13 @@
   background: rgb(64, 64, 64);
 }
 
+.lost .player {
+  background: rgb(160, 64, 64);
+}
+.won .player {
+  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+}
+
 .coin {
     width: 100px;
     height: 100px;
@@ -93,7 +100,7 @@
     margin: 50px 0 70px 65px;
   }
 
-  .eater {
+  .portal {
     width: 0px;
     height: 0px;
     border-right: 10px solid transparent;

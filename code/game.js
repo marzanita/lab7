@@ -35,9 +35,7 @@ function Level(plan) {
       else if (ch == "v")
         fieldType = "alien";
       else if (ch == "c")
-        fieldType = "eater";
-      
-
+        fieldType = "portal";
       gridLine.push(fieldType);
     }
     this.grid.push(gridLine);
@@ -45,7 +43,13 @@ function Level(plan) {
   this.player = this.actors.filter(function (actor) {
     return actor.type == "player";
   })[0];
+  this.status = this.finishDelay = null;
 }
+
+Level.prototype.isFinished = function() {
+  return this.status != null && this.finishDelay < 0;
+};
+
 
 function Moon(pos) {
   this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1))
@@ -143,6 +147,7 @@ DOMDisplay.prototype.drawFrame = function () {
   if (this.actorLayer)
     this.wrap.removeChild(this.actorLayer);
   this.actorLayer = this.wrap.appendChild(this.drawActors());
+  this.wrap.className = "game " + (this.level.status || "");
   this.scrollPlayerIntoView();
 };
 
@@ -172,6 +177,10 @@ DOMDisplay.prototype.scrollPlayerIntoView = function () {
     this.wrap.scrollTop = center.y + margin - height;
 };
 
+DOMDisplay.prototype.clear = function() {
+  this.wrap.parentNode.removeChild(this.wrap);
+};
+
 Level.prototype.obstacleAt = function (pos, size) {
   var xStart = Math.floor(pos.x);
   var xEnd = Math.ceil(pos.x + size.x);
@@ -180,6 +189,9 @@ Level.prototype.obstacleAt = function (pos, size) {
 
   if (xStart < 0 || xEnd > this.width || yStart < 0 || yEnd > this.height)
     return "wall";
+
+    if (yEnd > this.height)
+    return "lava";
 
   for (var y = yStart; y < yEnd; y++) {
     for (var x = xStart; x < xEnd; x++) {
@@ -201,7 +213,10 @@ Level.prototype.actorAt = function (actor) {
       return other;
   }
 };
+
 Level.prototype.animate = function (step, keys) {
+  if (this.status != null)
+  this.finishDelay -= step;
 
   while (step > 0) {
     var thisStep = Math.min(step, maxStep);
@@ -213,6 +228,9 @@ Level.prototype.animate = function (step, keys) {
     step -= thisStep;
   }
 };
+
+
+
 var wobbleSpeed = 8;
 var wobbleDist = 0.07;
 Coin.prototype.act = function (step) {
@@ -247,6 +265,7 @@ Player.prototype.moveX = function (step, level, keys) {
   var obstacle = level.obstacleAt(newPos, this.size);
   if (obstacle != "wall")
     if (obstacle != "floater")
+     if (obstacle != "portal")
 
       this.pos = newPos;
 };
@@ -273,8 +292,8 @@ Player.prototype.moveY = function (step, level, keys) {
     this.pos = new Vector(6, 8)
 
 
-  } else if (obstacle == "eater") {
-    this.pos = new Vector(5,7)
+  } else if (obstacle == "portal") {
+    this.pos = new Vector(15,1)
   } 
 };
 Player.prototype.act = function (step, level, keys) {
@@ -285,11 +304,20 @@ Player.prototype.act = function (step, level, keys) {
   if (otherActor)
     level.playerTouched(otherActor.type, otherActor);
 
+  if (level.status == "lost") {
+      this.pos.y += step;
+      this.size.y -= step;
+    }
+
 
 };
 
 Level.prototype.playerTouched = function (type, actor) {
-  if (type == 'coin') {
+  if (type == "lava" && this.status == null) {
+    this.status = "lost";
+    this.finishDelay = 1;
+
+  }if (type == 'coin') {
     this.actors = this.actors.filter(function (other) {
       return other != actor;
     });
@@ -301,6 +329,13 @@ Level.prototype.playerTouched = function (type, actor) {
     this.actors = this.actors.filter(function (other) {
       return other != actor;
     });
+    if (!this.actors.some(function(actor) {
+      return actor.type == 'coin','jewel','moon';
+    })) {
+      this.status = "won";
+      this.finishDelay = 1;
+
+   }
   }
 };
 
@@ -347,12 +382,17 @@ function runAnimation(frameFunc) {
 
 var arrows = trackKeys(arrowCodes);
 
-function runLevel(level, Display) {
+function runLevel(level, Display, andThen) {
   var display = new Display(document.body, level);
-
-  runAnimation(function (step) {
+  runAnimation(function(step) {
     level.animate(step, arrows);
     display.drawFrame(step);
+    if (level.isFinished()) {
+      display.clear();
+      if (andThen)
+        andThen(level.status);
+      return false;
+    }
   });
 }
 
