@@ -1,7 +1,8 @@
 var actorChars = {
   '@': Player,
   'o': Coin,
-  'd': Jewel
+  'd': Jewel,
+  'p': Moon
 };
 
 function Level(plan) {
@@ -46,6 +47,12 @@ function Level(plan) {
   })[0];
 }
 
+function Moon(pos) {
+  this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1))
+  this.size = new Vector(0.6, 0.6);
+  this.wobble = Math.random() * Math.PI * 2;
+}
+
 function Jewel(pos) {
   this.basePos = this.pos = pos.plus(new Vector(0.2, 0.1))
   this.size = new Vector(0.6, 0.6);
@@ -59,6 +66,7 @@ function Coin(pos) {
   this.wobble = Math.random() * Math.PI * 2;
 
 }
+Moon.prototype.type = 'moon'
 Jewel.prototype.type = 'jewel'
 Coin.prototype.type = 'coin';
 Player.prototype.type = 'player';
@@ -219,6 +227,12 @@ Jewel.prototype.act = function (step) {
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
 }
 
+Moon.prototype.act = function (step) {
+  this.wobble += step * wobbleSpeed;
+  var wobblePos = Math.sin(this.wobble) * wobbleDist;
+  this.pos = this.basePos.plus(new Vector(0, wobblePos));
+}
+
 var maxStep = 0.05;
 
 var playerXSpeed = 7;
@@ -261,9 +275,7 @@ Player.prototype.moveY = function (step, level, keys) {
 
   } else if (obstacle == "eater") {
     this.pos = new Vector(5,7)
-  } else if (obstacle == "portal") {
-    this.pos = new Vector(10,12)
-  }
+  } 
 };
 Player.prototype.act = function (step, level, keys) {
   this.moveX(step, level, keys);
@@ -282,6 +294,10 @@ Level.prototype.playerTouched = function (type, actor) {
       return other != actor;
     });
   } else if (type == 'jewel') {
+    this.actors = this.actors.filter(function (other) {
+      return other != actor;
+    });
+  } else if (type == 'moon') {
     this.actors = this.actors.filter(function (other) {
       return other != actor;
     });
@@ -342,7 +358,14 @@ function runLevel(level, Display) {
 
 function runGame(plans, Display) {
   function startLevel(n) {
-    runLevel(new Level(plans[n]), Display);
+    runLevel(new Level(plans[n]), Display, function(status) {
+      if (status == "lost")
+        startLevel(n);
+      else if (n < plans.length - 1)
+        startLevel(n + 1);
+      else
+        console.log("You win!");
+    });
   }
   startLevel(0);
 }
