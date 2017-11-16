@@ -28,7 +28,14 @@
   background: rgb(64, 64, 64);
 }
 
-.coin {background: #f0d760;
+.coin {
+    width: 100px;
+    height: 100px;
+    background: #f0d760;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+  
 }
 
 .jewel:after {
@@ -39,9 +46,74 @@
   width: 0;
   height: 0;
   border-style: solid;
-  border-color: #d4bdc5 transparent transparent transparent;
+  border-color: #f1f1ef transparent transparent transparent;
   border-width: 15px 10px 0 10px;
 }
+
+
+.alien {
+
+  box-shadow:
+    0 0 0 1em #66cbd2,
+    0 1em 0 1em #66cbd2,
+    -2.5em 1.5em 0 .5em #66cbd2,
+    2.5em 1.5em 0 .5em #66cbd2,
+    -3em -3em 0 0 #66cbd2,
+    3em -3em 0 0 #66cbd2,
+    -2em -2em 0 0 #66cbd2,
+    2em -2em 0 0 #66cbd2,
+    -3em -1em 0 0 #66cbd2,
+    -2em -1em 0 0 #66cbd2,
+    2em -1em 0 0 #66cbd2,
+    3em -1em 0 0 #66cbd2,
+    -4em 0 0 0 #66cbd2,
+    -3em 0 0 0 #66cbd2,
+    3em 0 0 0 #66cbd2,
+    4em 0 0 0 #66cbd2,
+    -5em 1em 0 0 #66cbd2,
+    -4em 1em 0 0 #66cbd2,
+    4em 1em 0 0 #66cbd2,
+    5em 1em 0 0 #66cbd2,
+    -5em 2em 0 0 #66cbd2,
+    5em 2em 0 0 #66cbd2,
+    -5em 3em 0 0 #66cbd2,
+    -3em 3em 0 0 #66cbd2,
+    3em 3em 0 0 #66cbd2,
+    5em 3em 0 0 #66cbd2,
+    -2em 4em 0 0 #66cbd2,
+    -1em 4em 0 0 #66cbd2,
+    1em 4em 0 0 #66cbd2,
+    2em 4em 0 0 #66cbd2;
+
+    background: #66cbd2;
+    width: 1em;
+    height: 1em;
+    overflow: hidden;
+
+    margin: 50px 0 70px 65px;
+  }
+
+  .eater {
+    width: 0px;
+    height: 0px;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f85b5b;
+    border-left: 10px solid #f85b5b;
+    border-bottom: 10px solid #f85b5bed;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+.moon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 5px 5px 0 0 silver;
+
+}
+      
 
 .game {
   position: relative;

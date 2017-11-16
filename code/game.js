@@ -31,6 +31,11 @@ function Level(plan) {
         fieldType = "lava";
       else if (ch == "y")
         fieldType = "floater";
+      else if (ch == "v")
+        fieldType = "alien";
+      else if (ch == "c")
+        fieldType = "eater";
+      
 
       gridLine.push(fieldType);
     }
@@ -253,6 +258,11 @@ Player.prototype.moveY = function (step, level, keys) {
   if (obstacle == "lava") {
     this.pos = new Vector(6, 8)
 
+
+  } else if (obstacle == "eater") {
+    this.pos = new Vector(5,7)
+  } else if (obstacle == "portal") {
+    this.pos = new Vector(10,12)
   }
 };
 Player.prototype.act = function (step, level, keys) {
