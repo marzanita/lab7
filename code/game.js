@@ -336,32 +336,51 @@ Player.prototype.act = function (step, level, keys) {
 };
 
 Level.prototype.playerTouched = function (type, actor) {
-  if (type == "lava" && this.status == null) {
-    this.status = "lost";
-    this.finishDelay = 1;
-
-  } else if (type == 'coin') {
-    this.actors = this.actors.filter(function (other) {
-      return other != actor;
-    });
-  } else if (type == 'jewel') {
-    this.actors = this.actors.filter(function (other) {
-      return other != actor;
-    });
-  } else if (type == 'moon') {
-    this.actors = this.actors.filter(function (other) {
-      return other != actor;
-    });
-    if (!this.actors.some(function(actor) {
-      return actor.type == 'coin','jewel','moon';
-    })) {
-      this.status = "won";
+  
+    // if the player touches lava and the player hasn't won
+    // Player loses
+    if (type == "lava" && this.status == null) {
+      this.status = "lost";
       this.finishDelay = 1;
-
-   }
-  }
-};
-
+    } else if (type == "coin") {
+      this.actors = this.actors.filter(function (other) {
+        return other != actor;
+      });
+  
+      // If there aren't any coins left, player wins
+      // Easiest but longest way to jump a level
+      if (!this.actors.some(function (actor) {
+          return actor.type == "coin";
+        })) {
+        this.status = "won";
+        this.finishDelay = 1;
+      }
+      // If there aren't any jewels left, player wins
+      // Intermediate way to jump a level 
+    } else if (type == 'jewel') {
+      this.actors = this.actors.filter(function (other) {
+        return other != actor;
+      });
+      if (!this.actors.some(function (actor) {
+          return actor.type == "jewel";
+        })) {
+        this.status = "won";
+        this.finishDelay = 1;
+      }
+      // If ther aren't any moons left, player wins
+      // Hardest but quickest way to jump a level
+    } else if (type == 'moon') {
+      this.actors = this.actors.filter(function (other) {
+        return other != actor;
+      });
+      if (!this.actors.some(function (actor) {
+          return actor.type == "moon";
+        })) {
+        this.status = "won";
+        this.finishDelay = 1;
+      }
+    }
+  };
 
 var arrowCodes = {
   37: "left",
@@ -385,6 +404,10 @@ function trackKeys(codes) {
   addEventListener("keydown", handler);
   addEventListener("keyup", handler);
   return pressed;
+}
+
+function displayWinMsg() {
+  document.getElementById("win-msg").style.display = "block";
 }
 
 function runAnimation(frameFunc) {
@@ -428,8 +451,9 @@ function runGame(plans, Display) {
       else if (n < plans.length - 1)
         startLevel(n + 1);
       else
-        console.log("You win!");
+        displayWinMsg();
     });
   }
   startLevel(0);
 }
+
