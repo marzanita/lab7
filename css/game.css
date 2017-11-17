@@ -93,7 +93,7 @@
   box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
 
-.winmsg {
+#win-msg {
   max-width: 600px;
   margin: 0px auto;
   padding-top: 20%;
@@ -102,7 +102,7 @@
   display: none;
 }
 
-.winmsg h1 {
+#win-msg h1 {
   color: #5c94fc;
   position: absolute;
   top: 50%;

@@ -346,17 +346,14 @@ Level.prototype.playerTouched = function (type, actor) {
       this.actors = this.actors.filter(function (other) {
         return other != actor;
       });
-  
-      // If there aren't any coins left, player wins
-      // Easiest but longest way to jump a level
+      
       if (!this.actors.some(function (actor) {
           return actor.type == "coin";
         })) {
         this.status = "won";
         this.finishDelay = 1;
       }
-      // If there aren't any jewels left, player wins
-      // Intermediate way to jump a level 
+
     } else if (type == 'jewel') {
       this.actors = this.actors.filter(function (other) {
         return other != actor;
