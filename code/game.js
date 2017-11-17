@@ -43,7 +43,6 @@ function Level(plan) {
   this.player = this.actors.filter(function (actor) {
     return actor.type == "player";
   })[0];
-  this.status = this.finishDelay = null;
 }
 
 Level.prototype.isFinished = function() {
@@ -95,7 +94,22 @@ function Player(pos) {
   this.size = new Vector(0.8, 1.5);
   this.speed = new Vector(0, 0);
 }
-Player.prototype.type = "player";
+
+function Lava(pos, ch) {
+  this.pos = pos;
+  this.size = new Vector(1, 1);
+  if (ch == "=") {
+    this.speed = new Vector(2, 0);
+  } else if (ch == "|") {
+    this.speed = new Vector(0, 2);
+  } else if (ch == "v") {
+    this.speed = new Vector(0, 3);
+    this.repeatPos = pos;
+  }
+}
+
+
+Lava.prototype.type = "lava";
 
 function elt(name, className) {
   var elt = document.createElement(name);
@@ -229,10 +243,19 @@ Level.prototype.animate = function (step, keys) {
   }
 };
 
-
+Lava.prototype.act = function(step, level) {
+  var newPos = this.pos.plus(this.speed.times(step));
+  if (!level.obstacleAt(newPos, this.size))
+    this.pos = newPos;
+  else if (this.repeatPos)
+    this.pos = this.repeatPos;
+  else
+    this.speed = this.speed.times(-1);
+};
 
 var wobbleSpeed = 8;
 var wobbleDist = 0.07;
+
 Coin.prototype.act = function (step) {
   this.wobble += step * wobbleSpeed;
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
@@ -243,13 +266,13 @@ Jewel.prototype.act = function (step) {
   this.wobble += step * wobbleSpeed;
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
-}
+};
 
 Moon.prototype.act = function (step) {
   this.wobble += step * wobbleSpeed;
   var wobblePos = Math.sin(this.wobble) * wobbleDist;
   this.pos = this.basePos.plus(new Vector(0, wobblePos));
-}
+};
 
 var maxStep = 0.05;
 
@@ -317,7 +340,7 @@ Level.prototype.playerTouched = function (type, actor) {
     this.status = "lost";
     this.finishDelay = 1;
 
-  }if (type == 'coin') {
+  } else if (type == 'coin') {
     this.actors = this.actors.filter(function (other) {
       return other != actor;
     });
@@ -379,6 +402,7 @@ function runAnimation(frameFunc) {
   }
   requestAnimationFrame(frame);
 }
+
 
 var arrows = trackKeys(arrowCodes);
 

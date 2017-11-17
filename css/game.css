@@ -25,14 +25,15 @@
 }
 
 .player {
-  background: rgb(64, 64, 64);
-}
+  
+  display:block;
+  width: 126px;
+  height: 180px;
+  background-color: #614E62;
+  -webkit-border-radius: 63px 63px 63px 63px / 108px 108px 72px 72px;
+  border-radius:         50%  50%  50%  50%  / 60%   60%   40%  40%;
 
-.lost .player {
-  background: rgb(160, 64, 64);
-}
-.won .player {
-  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
+
 }
 
 .coin {
@@ -56,51 +57,7 @@
   border-color: #f1f1ef transparent transparent transparent;
   border-width: 15px 10px 0 10px;
 }
-
-
-.alien {
-
-  box-shadow:
-    0 0 0 1em #66cbd2,
-    0 1em 0 1em #66cbd2,
-    -2.5em 1.5em 0 .5em #66cbd2,
-    2.5em 1.5em 0 .5em #66cbd2,
-    -3em -3em 0 0 #66cbd2,
-    3em -3em 0 0 #66cbd2,
-    -2em -2em 0 0 #66cbd2,
-    2em -2em 0 0 #66cbd2,
-    -3em -1em 0 0 #66cbd2,
-    -2em -1em 0 0 #66cbd2,
-    2em -1em 0 0 #66cbd2,
-    3em -1em 0 0 #66cbd2,
-    -4em 0 0 0 #66cbd2,
-    -3em 0 0 0 #66cbd2,
-    3em 0 0 0 #66cbd2,
-    4em 0 0 0 #66cbd2,
-    -5em 1em 0 0 #66cbd2,
-    -4em 1em 0 0 #66cbd2,
-    4em 1em 0 0 #66cbd2,
-    5em 1em 0 0 #66cbd2,
-    -5em 2em 0 0 #66cbd2,
-    5em 2em 0 0 #66cbd2,
-    -5em 3em 0 0 #66cbd2,
-    -3em 3em 0 0 #66cbd2,
-    3em 3em 0 0 #66cbd2,
-    5em 3em 0 0 #66cbd2,
-    -2em 4em 0 0 #66cbd2,
-    -1em 4em 0 0 #66cbd2,
-    1em 4em 0 0 #66cbd2,
-    2em 4em 0 0 #66cbd2;
-
-    background: #66cbd2;
-    width: 1em;
-    height: 1em;
-    overflow: hidden;
-
-    margin: 50px 0 70px 65px;
-  }
-
-  .portal {
+ .portal {
     width: 0px;
     height: 0px;
     border-right: 10px solid transparent;
@@ -127,6 +84,13 @@
   max-height: 450px;
   max-width: 600px;
   overflow: hidden;
+}
+
+.lost .player {
+  background: rgb(160, 64, 64);
+}
+.won .player {
+  box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
 
 
