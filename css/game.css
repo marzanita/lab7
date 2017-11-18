@@ -95,7 +95,8 @@
 
 #win-msg {
   max-width: 600px;
-  margin: 0px auto;
+  height: 136px;
+  /* margin: 0px auto; */
   padding-top: 20%;
   text-align: center;
   position: relative;
@@ -105,9 +106,14 @@
 #win-msg h1 {
   color: #5c94fc;
   position: absolute;
-  top: 50%;
+  top: 37%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
 }
 
+button {
+  position: absolute;
+  top: 53%;
+  left: 43%;
+}

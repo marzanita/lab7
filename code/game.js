@@ -441,16 +441,23 @@ function runLevel(level, Display, andThen) {
 }
 
 function runGame(plans, Display) {
+  document.getElementById("win-msg").style.display = "none";
   function startLevel(n) {
     runLevel(new Level(plans[n]), Display, function(status) {
-      if (status == "lost")
+      if (status == "lost"){
+        
         startLevel(n);
-      else if (n < plans.length - 1)
+        
+      }
+      else if (n < plans.length - 1) {
         startLevel(n + 1);
-      else
+      }
+      else {
         displayWinMsg();
+      }
     });
   }
+  console.log(plans.length);
   startLevel(0);
 }
 

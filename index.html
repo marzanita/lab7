@@ -5,7 +5,13 @@
 <link rel="stylesheet" href="css/game.css">
 
 <body>
+  <div class="background" id="win-msg">
+    <h1>You won!</h1>
+    <br>
+    <button type="button" onclick="runGame(GAME_LEVELS, DOMDisplay);">Play Again!</button>
+  </div>
   <script>
     runGame(GAME_LEVELS, DOMDisplay);
   </script>
 </body>
+</html>
