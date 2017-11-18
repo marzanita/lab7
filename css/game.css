@@ -9,7 +9,7 @@
 }
 
 .lava {
-  background: #A239CA;
+  background: #f49c14;
 }
 
 .wall {
@@ -103,16 +103,18 @@
 }
 
 #win-msg h1 {
-  color: #5c94fc;
+  color: #dcf414;
   position: absolute;
-  top: 37%;
+  top: 30%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+  font-family: Impact;
+  font-size: 100px;
 }
 
 button {
   position: absolute;
-  top: 53%;
-  left: 43%;
+  top: 68%;
+  left: 45%;
 }
