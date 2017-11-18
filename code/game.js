@@ -2,7 +2,8 @@ var actorChars = {
   '@': Player,
   'o': Coin,
   'd': Jewel,
-  'p': Moon
+  'p': Moon,
+  'v': Lava
 };
 
 function Level(plan) {

@@ -29,7 +29,7 @@
   display:block;
   width: 126px;
   height: 180px;
-  background-color: #614E62;
+  background-color: #daff00;
   -webkit-border-radius: 63px 63px 63px 63px / 108px 108px 72px 72px;
   border-radius:         50%  50%  50%  50%  / 60%   60%   40%  40%;
 
@@ -61,9 +61,9 @@
     width: 0px;
     height: 0px;
     border-right: 10px solid transparent;
-    border-top: 10px solid #f85b5b;
-    border-left: 10px solid #f85b5b;
-    border-bottom: 10px solid #f85b5bed;
+    border-top: 10px solid #f49c14;
+    border-left: 10px solid #f49c14;
+    border-bottom: 10px solid #f49c14;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -96,7 +96,6 @@
 #win-msg {
   max-width: 600px;
   height: 136px;
-  /* margin: 0px auto; */
   padding-top: 20%;
   text-align: center;
   position: relative;
